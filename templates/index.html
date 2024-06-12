@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QA Bot</title>
+</head>
+<body>
+    <h1>QA Bot</h1>
+    <form method="post" action="/ask">
+        <div class="input-group">
+            <label for="question">Ask a question:</label>
+            <select id="question" class="custom-select">
+                <option value="">Select a question...</option>
+                <option value="1">What are the origins of Mercedes-Benz and when was it established?</option>
+                <option value="2">Who was Emil Jellinek-Mercedes and what role did he play in Mercedes-Benz's early history?</option>
+                <option value="3">How did Mercedes-Benz evolve during the Nazi period in terms of production and usage?</option>
+                <option value="4">Why did Daimler AG spin off Mercedes-Benz into a separate subsidiary in November 2019?</option>
+                <option value="5">What was the significance of the 1955 Mercedes-Benz SLR sale in May 2022 and how were the proceeds used?</option>
+                <option value="6">How has Mercedes-Benz expanded in China, focusing on electric vehicle partnerships?</option>
+                <option value="7">What is the importance of Mercedes-Maybach within Mercedes-Benz, especially post-2012?</option>
+                <option value="8">Describe Mercedes-Benz's operations in Vietnam, including partnerships, assembly processes, and recent investments.</option>
+                <option value="9">How did Mercedes-Benz's quality rankings change in J.D. Power surveys from the late 1990s to early 2000s?</option>
+                <option value="10">What notable awards has Mercedes-Benz received for quality and reliability, particularly from J.D. Power and other studies?</option>
+            </select>
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+    <div id="response"></div>
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const question = document.querySelector('#question').value;
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ question }),
+            });
+            const result = await response.json();
+            document.querySelector('#response').innerText = result.response;
+        });
+    </script>
+</body>
+</html>
